@@ -1,5 +1,7 @@
 fs = require 'fs'
 path = require 'path'
+{Workspace, Editor, File} = require 'atom'
+
 #process = require 'process'
 defaultFileContent = require './oni-default-file-content'
 
@@ -14,8 +16,10 @@ oniSetupServer = () ->
       fs.mkdir configPath, '0777', () ->
         console.log('made dir')
 
-  fs.writeFile path.join(configPath, 'server.json'), defaultFileContent()
+  newServerFile = path.join configPath, 'server.json'
 
-  #@todo - add opening the file right after creating it
+  fs.writeFile newServerFile, defaultFileContent()
+
+  theEditor = atom.workspace.open newServerFile
 
 module.exports = oniSetupServer
