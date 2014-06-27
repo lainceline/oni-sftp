@@ -1,7 +1,9 @@
 fs = require 'fs'
+createPane = require 'atom-pane'
 path = require 'path'
 {Workspace, Editor, File, $} = require 'atom'
 events = require 'events'
+AddDialog = null
 
 defaultFileContent = require './oni-default-file-content'
 
@@ -13,21 +15,27 @@ oniSetupServer = () ->
   fs.exists configPath, (exists) ->
     if not exists
       fs.mkdir configPath, '0777', () ->
-        console.log('made dir')
 
   newServerFile = path.join configPath, 'server.json'
 
-  #fs.writeFile newServerFile, defaultFileContent()
+  AddDialog ?= require '../views/oni-sftp-newserver-dialog'
+  dialog = new AddDialog(configPath)
+  dialog.on 'file-created', (event, createdPath) ->
+    console.log(event)
+  dialog.attach()
+  #theEditor = atom.workspace.open newServerFile
 
-  theEditor = atom.workspace.open newServerFile
-
-  theEditor.then (result) ->
-    result.setText(defaultFileContent())
-    pane = atom.workspace.getActivePane()
-
-    buffer = pane.getActiveItem().getBuffer()
-
-    buffer.on 'will-be-saved', =>
-      pane.saveActiveItemAs()
+  #theEditor.then (result) ->
+  #  result.setText(defaultFileContent())
+  #  console.log result
+  #  pane = atom.workspace.getActivePane()
+  #  console.log pane
+  #  buffer = pane.getActiveItem().getBuffer()
+  #  console.log buffer
+    #buffer.on 'will-be-saved', =>
+    #  pane.saveActiveItemAs()
+    #  newUri = buffer.file.path
+    #  pane.destroyItem(result)
+    #  atom.workspace.open newUri
 
 module.exports = oniSetupServer
