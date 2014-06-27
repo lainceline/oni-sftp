@@ -2,11 +2,9 @@ fs = require 'fs'
 path = require 'path'
 {Workspace, Editor, File} = require 'atom'
 
-#process = require 'process'
 defaultFileContent = require './oni-default-file-content'
 
 oniSetupServer = () ->
-  console.log('onisetupserver')
   #create a new config file
   #check if config directory exists first, create if not
   configPath = path.join process.env['HOME'], '.config', 'atom-oni-sftp'
