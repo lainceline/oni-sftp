@@ -3,6 +3,7 @@ fs = require 'fs'
 path = require 'path'
 
 OniSetupServer = require '../models/oni-setup-server'
+OniBrowseServer = require '../models/oni-browse-server'
 
 module.exports =
 class OniSftpBrowseView extends SelectListView
@@ -39,7 +40,7 @@ class OniSftpBrowseView extends SelectListView
     commands.push({name: 'add-server', description: 'Add new server', func: -> OniSetupServer()})
 
     for server in @servers
-      commands.push({name: server, description: server})
+      commands.push({name: server, description: server, func: (server) -> OniBrowseServer(server)})
 
     @setItems(commands)
 
@@ -69,6 +70,6 @@ class OniSftpBrowseView extends SelectListView
       @li class: 'command', 'data-command-name': name, =>
         if matchedStr? then @raw(matchedStr) else @span description
 
-  confirmed: ({func}) ->
+  confirmed: (server) ->
     @cancel()
-    func()
+    server.func(server.name)
