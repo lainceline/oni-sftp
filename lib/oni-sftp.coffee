@@ -1,17 +1,13 @@
-OniSFTPSelectListView = require './oni-sftp-view'
+OniSftpBrowseView = require './views/oni-sftp-browse-view'
 
 module.exports =
-  oniSftpView: null
 
   activate: (state) ->
-    #@oniSftpView = new OniSFTPSelectListView(state.oniSftpViewState)
     atom.workspaceView.command "oni-sftp:menu", => @menu()
 
   menu: ->
-    new OniSFTPSelectListView()
+    new OniSftpBrowseView()
 
   deactivate: ->
-    @oniSftpView.destroy()
 
   serialize: ->
-    oniSftpViewState: @oniSftpView.serialize()
