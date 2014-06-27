@@ -1,4 +1,6 @@
 {$, $$, SelectListView} = require 'atom'
+fs = require 'fs'
+path = require 'path'
 
 OniSetupServer = require '../models/oni-setup-server'
 
@@ -9,10 +11,24 @@ class OniSftpBrowseView extends SelectListView
     super
     @addClass('overlay from-top')
 
+    @servers = @getServerList()
     @addCommands()
 
     atom.workspaceView.append(this)
     @focusFilterEditor()
+
+  getServerList: ->
+    servers = []
+    files = []
+
+    configPath = path.join(process.env['HOME'], '/.config/atom-oni-sftp')
+    if fs.existsSync configPath
+      files = fs.readdirSync(configPath)
+
+    for file in files
+      servers.push file.substring(0, file.indexOf('.'))
+
+    servers
 
   addCommands: ->
     @storeFocusedElement()
@@ -22,8 +38,8 @@ class OniSftpBrowseView extends SelectListView
     #add the Add new server command
     commands.push({name: 'add-server', description: 'Add new server', func: -> OniSetupServer()})
 
-    #now we will want to add all the stored sftp servers to the commands list
-    #We'll be storing these servers in json files
+    for server in @servers
+      commands.push({name: server, description: server})
 
     @setItems(commands)
 
