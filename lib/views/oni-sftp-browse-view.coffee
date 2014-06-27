@@ -1,5 +1,7 @@
 {$, $$, SelectListView} = require 'atom'
 
+OniSetupServer = require '../models/oni-setup-server'
+
 module.exports =
 class OniSftpBrowseView extends SelectListView
 
@@ -18,7 +20,7 @@ class OniSftpBrowseView extends SelectListView
     commands = []
 
     #add the Add new server command
-    commands.push({name: 'add-server', description: 'Add new server', func: 'add-server'})
+    commands.push({name: 'add-server', description: 'Add new server', func: -> OniSetupServer()})
 
     #now we will want to add all the stored sftp servers to the commands list
     #We'll be storing these servers in json files
