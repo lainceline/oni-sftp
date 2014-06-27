@@ -1,0 +1,15 @@
+{
+  "name": "oni-sftp",
+  "main": "./lib/oni-sftp",
+  "version": "0.0.0",
+  "description": "A simple SFTP client for Atom",
+  "activationEvents": ["oni-sftp:menu"],
+  "repository": "https://github.com/atom/oni-sftp",
+  "license": "MIT",
+  "engines": {
+    "atom": ">0.50.0"
+  },
+  "dependencies": {
+    "node-sftp": "latest"
+  }
+}

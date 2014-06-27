@@ -1,0 +1,21 @@
+# See https://atom.io/docs/latest/creating-a-package#menus for more details
+'context-menu':
+  '.workspace':
+      'Oni SFTP':
+        'Upload file': 'oni-sftp:upload'
+        'Download file': 'oni-sftp:download'
+
+'menu': [
+  {
+    'label': 'Packages'
+    'submenu': [
+      'label': 'Oni SFTP'
+      'submenu': [
+        { 'label': 'Browse Server', 'command': 'oni-sftp:menu' },
+        { 'label': 'Setup Server', 'command': 'oni-sftp:setup' },
+        { 'label': 'Edit Server', 'command': 'oni-sftp:edit'},
+        { 'label': 'Delete Server', 'command': 'oni-sftp:delete'}
+      ]
+    ]
+  }
+]
