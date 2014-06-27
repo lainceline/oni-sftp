@@ -1,6 +1,7 @@
 fs = require 'fs'
 path = require 'path'
-{Workspace, Editor, File} = require 'atom'
+{Workspace, Editor, File, $} = require 'atom'
+events = require 'events'
 
 defaultFileContent = require './oni-default-file-content'
 
@@ -16,8 +17,17 @@ oniSetupServer = () ->
 
   newServerFile = path.join configPath, 'server.json'
 
-  fs.writeFile newServerFile, defaultFileContent()
+  #fs.writeFile newServerFile, defaultFileContent()
 
   theEditor = atom.workspace.open newServerFile
+
+  theEditor.then (result) ->
+    result.setText(defaultFileContent())
+    pane = atom.workspace.getActivePane()
+
+    buffer = pane.getActiveItem().getBuffer()
+
+    buffer.on 'will-be-saved', =>
+      pane.saveActiveItemAs()
 
 module.exports = oniSetupServer
