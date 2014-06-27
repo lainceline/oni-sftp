@@ -10,7 +10,7 @@
     "atom": ">0.50.0"
   },
   "dependencies": {
-    "node-sftp": "latest",
+    "ssh2": "latest",
     "atom-pane": "latest"
   }
 }
