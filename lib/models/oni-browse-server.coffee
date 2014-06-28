@@ -37,8 +37,6 @@ oniBrowseServer = (server) ->
 
             new OniRemoteDirView fileList
 
-          #make a select list view with the file structure
-          #conn.end()
     .connect(
       host: @options['host']
       port: @options['port']
